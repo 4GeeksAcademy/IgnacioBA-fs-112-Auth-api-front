@@ -3,9 +3,6 @@
 export async function login(email, password) {
     console.log("Soy un console log del servicio");
     console.log(email, password);
-
-
-
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
             method: 'POST',
@@ -25,13 +22,11 @@ export async function login(email, password) {
             return false
         }
 
-
     } catch (error) {
         console.log(error)
         return false
     }
 }
-
 
 export async function getUserFavorites() {
 
