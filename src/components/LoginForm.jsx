@@ -4,41 +4,56 @@ import { login } from "../services/userServices.js";
 import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const { store, dispatch } = useGlobalReducer();
+    const navigate = useNavigate();
 
-    //declaracion de estados
-    const [email,setEmail]= useState("")
-    const [password,setPassword]= useState("")
-    //consumo de contexto global
-    const { store, dispatch } = useGlobalReducer()
-
-    // hooks de react router para redireccionar
-    const navigate = useNavigate()
-
-    //funcion de manejo de informacion sobre el login
     async function handleSubmit(e) {
-        e.preventDefault()
-    
-        let isLogged = await login(email,password);
-         console.log(isLogged);
-        if (isLogged) {
-            dispatch({type:'LOGIN',payload:isLogged})
-            navigate("/")
-        }
+        e.preventDefault();
 
-        
+        let isLogged = await login(email, password);
+        console.log(isLogged);
+        if (isLogged) {
+            dispatch({ type: "LOGIN", payload: isLogged });
+            navigate("/");
+        }
     }
 
     return (
-        <form className="w-50 mx-auto" onSubmit={handleSubmit}>
-            <div className="mb-3">
-                <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                <input type="email" className="form-control" id="exampleInputEmail1" value={email} aria-describedby="emailHelp" onChange={(e)=>setEmail(e.target.value)}/>
+        <div className="container d-flex justify-content-center align-items-center vh-100">
+            <div className="card shadow-sm p-4" style={{ maxWidth: "400px", width: "100%" }}>
+                <h2 className="text-center mb-4">Login</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="loginEmail" className="form-label">Email address</label>
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            className="form-control"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="mb-3">
+                        <label htmlFor="loginPassword" className="form-label">Password</label>
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            className="form-control"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <button type="submit" className="btn btn-primary w-100">
+                        Login
+                    </button>
+                </form>
             </div>
-            <div className="mb-3">
-                <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                <input type="password" className="form-control" value={password} id="exampleInputPassword1" onChange={(e)=>setPassword(e.target.value)}/>
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
-    )
-}; 
+        </div>
+    );
+};

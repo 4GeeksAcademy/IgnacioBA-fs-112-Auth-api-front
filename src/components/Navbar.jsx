@@ -1,25 +1,55 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
-export const Navbar = () => {
-	 const { store, dispatch } = useGlobalReducer()
+const Navbar = () => {
+	const { store, dispatch } = useGlobalReducer();
+	const navigate = useNavigate();
 
-	 console.log(store);
-	 
+	const handleLogout = () => {
+		localStorage.removeItem("access_token");
+		dispatch({ type: "LOGOUT" });
+		navigate("/login");
+	};
 
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					{/* conditional rendering para mostrar el boton de logout si esta logueado o no */}
-					{store.isAuth ? <button className="btn btn-primary">Logout</button>: null}
-						
-					
-				</div>
+		<nav className="navbar navbar-expand-lg navbar-light bg-light px-3">
+			<Link className="navbar-brand" to="/">MyApp</Link>
+
+			<div className="collapse navbar-collapse">
+				<ul className="navbar-nav me-auto">
+					<li className="nav-item">
+						<Link className="nav-link" to="/">Home</Link>
+					</li>
+
+					{/* Private link only if authenticated */}
+					{store.isAuth && (
+						<li className="nav-item">
+							<Link className="nav-link" to="/private">Private</Link>
+						</li>
+					)}
+				</ul>
+
+				<ul className="navbar-nav ms-auto">
+					{!store.isAuth ? (
+						<>
+							<li className="nav-item">
+								<Link className="nav-link" to="/login">Login</Link>
+							</li>
+							<li className="nav-item">
+								<Link className="nav-link" to="/signup">Signup</Link>
+							</li>
+						</>
+					) : (
+						<li className="nav-item">
+							<button className="btn btn-outline-danger" onClick={handleLogout}>
+								Logout
+							</button>
+						</li>
+					)}
+				</ul>
 			</div>
 		</nav>
 	);
 };
+
+export default Navbar;

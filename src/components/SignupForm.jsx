@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { signup } from '../services/userServices';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function SignupForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -12,30 +13,48 @@ export default function SignupForm() {
         const success = await signup(email, password);
 
         if (success) {
-            navigate("/favorites"); 
+            navigate("/private"); 
         } else {
-            alert("No se pudo registrar el usuario");
+            alert("User could not be registered");
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Sign Up</h2>
-            <input
-                type="email"
-                placeholder="Correo electrónico"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
-            <input
-                type="password"
-                placeholder="Contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-            />
-            <button type="submit">Sign up</button>
-        </form>
+        <div className="container d-flex justify-content-center align-items-center vh-100">
+            <div className="card shadow-sm p-4" style={{ maxWidth: "400px", width: "100%" }}>
+                <h2 className="text-center mb-4">Sign Up</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="signupEmail" className="form-label">Email</label>
+                        <input
+                            type="email"
+                            id="signupEmail"
+                            className="form-control"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="mb-3">
+                        <label htmlFor="signupPassword" className="form-label">Password</label>
+                        <input
+                            type="password"
+                            id="signupPassword"
+                            className="form-control"
+                            placeholder="Enter your password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <button type="submit" className="btn btn-primary w-100">
+                        Sign Up
+                    </button>
+                </form>
+            </div>
+        </div>
     );
 }
