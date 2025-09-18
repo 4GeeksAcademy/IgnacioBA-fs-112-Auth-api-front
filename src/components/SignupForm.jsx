@@ -20,17 +20,17 @@ export default function SignupForm() {
     };
 
     return (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
+        <div className="container d-flex justify-content-center align-items-start min-vh-100 pt-5">
             <div className="card shadow-sm p-4" style={{ maxWidth: "400px", width: "100%" }}>
                 <h2 className="text-center mb-4">Sign Up</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="signupEmail" className="form-label">Email</label>
+                        <label htmlFor="signupEmail" className="form-label">Email address</label>
                         <input
                             type="email"
                             id="signupEmail"
                             className="form-control"
-                            placeholder="Enter your email"
+                            
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
@@ -43,7 +43,7 @@ export default function SignupForm() {
                             type="password"
                             id="signupPassword"
                             className="form-control"
-                            placeholder="Enter your password"
+                            
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required

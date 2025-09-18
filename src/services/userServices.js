@@ -58,42 +58,23 @@ export async function signup(email, password) {
     }
 }
 
-// export async function getUserFavorites() {
-
-//     let token = localStorage.getItem("access_token")
-//     const myHeaders = new Headers();
-//     myHeaders.append("Authorization", `Bearer ${token}`)
-
-//     const requestOptions = {
-//         method: "GET",
-//         headers: myHeaders
-//     };
-
-//     try {
-//         const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/favorites", requestOptions);
-//         const result = await response.json();
-//         console.log(result)
-//     } catch (error) {
-//         console.error(error);
-//     };
-// }
-
 //declaracion de funcion para validar la autenticacion
 export async function validAuth() {
-    let token = localStorage.getItem("access_token")
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`)
+  let token = localStorage.getItem("access_token");
+  if (!token) return false; 
 
-    const requestOptions = {
-        method: "GET",
-        headers: myHeaders
-    };
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/valid-auth`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` }
+    });
 
-    try {
-        const response = await fetch(import.meta.env.VITE_BACKEND_URL +"/valid-auth", requestOptions);
-        const result = await response.json();
-        return result.logged
-    } catch (error) {
-        console.error(error);
-    };
+    if (!response.ok) return false; 
+
+    const result = await response.json();
+    return result.logged; 
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }

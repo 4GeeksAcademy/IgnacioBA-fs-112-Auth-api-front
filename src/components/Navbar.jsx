@@ -12,7 +12,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light bg-light px-3">
+		<nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3">
 			<Link className="navbar-brand" to="/">MyApp</Link>
 
 			<div className="collapse navbar-collapse">

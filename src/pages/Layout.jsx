@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, { useEffect } from "react"
 import { Outlet } from "react-router-dom/dist"
 import ScrollToTop from "../components/ScrollToTop"
 import Navbar from "../components/Navbar"
@@ -8,18 +8,25 @@ import useGlobalReducer from "../hooks/useGlobalReducer"
 
 // Base component that maintains the navbar and footer throughout the page and the scroll to top functionality.
 export const Layout = () => {
-     const {store, dispatch} =useGlobalReducer()
+    const { store, dispatch } = useGlobalReducer()
 
-// llamamos a validAuth para que le indica a toda la aplicacion si seguimos logueados
-      useEffect(()=>{
-        let auth = validAuth()
-        dispatch({type:'LOGIN',payload: auth})
-      },[])
+    // llamamos a validAuth para que le indica a toda la aplicacion si seguimos logueados
+    useEffect(() => {
+        const checkAuth = async () => {
+            const auth = await validAuth();
+            if (auth) {
+                dispatch({ type: "LOGIN" });
+            } else {
+                dispatch({ type: "LOGOUT" });
+            }
+        };
+        checkAuth();
+    }, [dispatch]);
 
     return (
         <ScrollToTop>
             <Navbar />
-                <Outlet />
+            <Outlet />
             <Footer />
         </ScrollToTop>
     )

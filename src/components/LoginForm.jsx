@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { login } from "../services/userServices.js";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ export const LoginForm = () => {
     }
 
     return (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
+        <div className="container d-flex justify-content-center align-items-start min-vh-100 pt-5">
             <div className="card shadow-sm p-4" style={{ maxWidth: "400px", width: "100%" }}>
                 <h2 className="text-center mb-4">Login</h2>
                 <form onSubmit={handleSubmit}>
@@ -52,6 +52,16 @@ export const LoginForm = () => {
                     <button type="submit" className="btn btn-primary w-100">
                         Login
                     </button>
+                    <div className="text-center">
+                        <span>¿No account? </span>
+                        <button
+                            type="button"
+                            className="btn btn-link p-0"
+                            onClick={() => navigate("/signup")}
+                        >
+                            Sign up first
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

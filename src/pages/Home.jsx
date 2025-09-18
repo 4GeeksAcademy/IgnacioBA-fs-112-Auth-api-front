@@ -15,10 +15,7 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
+			<h2>This is the home page</h2>
 		</div>
 	);
 }; 

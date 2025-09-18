@@ -1,8 +1,9 @@
 export const initialStore=()=>{
-  return{
+  const token = localStorage.getItem("access_token");
+  return {
     message: null,
-    isAuth: false
-  }
+    isAuth: !!token // true si hay token guardado
+  };
 }
 
 export default function storeReducer(store, action = {}) {
